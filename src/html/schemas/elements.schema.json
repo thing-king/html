@@ -1,0 +1,35 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "additionalProperties": {
+        "type": "object",
+        "properties": {
+            "deprecated": {
+                "type": "boolean"
+            },
+            "experimental": {
+                "type": "boolean"
+            },
+            "attributes": {
+                "type": "object",
+                "additionalProperties": {
+                    "type": "object",
+                    "properties": {
+                        "deprecated": {
+                            "type": "boolean"
+                        },
+                        "experimental": {
+                            "type": "boolean"
+                        }
+                    },
+                    "required": [
+                        "experimental"
+                    ]
+                }
+            }
+        },
+        "required": [
+            "attributes"
+        ]
+    }
+}
