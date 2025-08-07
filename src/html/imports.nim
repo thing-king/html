@@ -20,7 +20,7 @@ const JS_EVENTS* = [
   "ondurationchange", "onemptied", "onended", "onerror", "onfocus", 
   "onhashchange", "oninput", "oninvalid", "onkeydown", "onkeypress", 
   "onkeyup", "onload", "onloadeddata", "onloadedmetadata", "onloadstart", 
-  "onmessage", "onmousedown", "onmousemove", "onmouseout", "onmouseover", 
+  "onmessage", "onmousedown", "onmousemove", "onmouseout", "onmouseover", "onmouseenter", "onmouseleave",
   "onmouseup", "onmousewheel", "onoffline", "ononline", "onopen", "onpagehide", 
   "onpageshow", "onpaste", "onpause", "onplay", "onplaying", "onpopstate", 
   "onprogress", "onratechange", "onreset", "onresize", "onscroll", "onsearch", 

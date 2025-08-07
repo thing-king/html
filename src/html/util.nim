@@ -85,3 +85,45 @@ proc walk*(body: HTML, prc: proc(node: HTMLNode): Option[HTMLNode] {.gcsafe.}): 
       if newNode.get.kind == htmlnkElement:
         newNode.get.children = walk(node.children, prc)
       result.add newNode.get
+
+type
+  HTMLNodeFilter* = proc(node: HTMLNode): bool
+proc filterNode*(node: HTMLNode, shouldExclude: HTMLNodeFilter): HTMLNode
+proc filter*(html: HTML, shouldExclude: HTMLNodeFilter): HTML =
+  result = @[]
+  for node in html:
+    if node.isNil:
+      continue
+    let filteredNode = filterNode(node, shouldExclude)
+    if not filteredNode.isNil:
+      result.add(filteredNode)
+
+proc filterNode*(node: HTMLNode, shouldExclude: HTMLNodeFilter): HTMLNode =
+  if shouldExclude(node):
+    return nil
+  
+  case node.kind:
+  of htmlnkText:
+    # Create a copy of the text node
+    result = HTMLNode(
+      kind: htmlnkText,
+      elementId: node.elementId,
+      text: node.text
+    )
+  of htmlnkElement:
+    # Create a copy of the element node
+    result = HTMLNode(
+      kind: htmlnkElement,
+      elementId: node.elementId,
+      tag: node.tag,
+      attributes: node.attributes, # Reference copy is fine for attributes
+      children: @[]
+    )
+    
+    # Filter and add children
+    for child in node.children:
+      if child.isNil:
+        continue
+      let filteredChild = filterNode(child, shouldExclude)
+      if not filteredChild.isNil:
+        result.children.add(filteredChild)
